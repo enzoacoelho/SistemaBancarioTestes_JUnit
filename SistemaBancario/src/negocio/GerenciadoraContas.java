@@ -3,8 +3,8 @@ package negocio;
 import java.util.List;
 
 /**
- * Classe de negÛcio para realizar operaÁıes sobre as contas do banco.
- * @author Gustavo Farias
+ * Classe de negÔøΩcio para realizar operaÔøΩÔøΩes sobre as contas do banco.
+ * @author Enzo Coelho
  */
 public class GerenciadoraContas {
 
@@ -25,7 +25,7 @@ public class GerenciadoraContas {
 	/**
 	 * Pesquisa por uma conta a partir do seu ID.
 	 * @param idConta id da conta a ser pesquisada
-	 * @return a conta pesquisada ou null, caso n„o seja encontrada
+	 * @return a conta pesquisada ou null, caso nÔøΩo seja encontrada
 	 */
 	public ContaCorrente pesquisaConta (int idConta) {
 
@@ -37,7 +37,7 @@ public class GerenciadoraContas {
 	}
 	
 	/**
-	 * Adiciona uma nova conta ‡ lista de contas do banco.
+	 * Adiciona uma nova conta ÔøΩ lista de contas do banco.
 	 * @param novaConta nova conta a ser adicionada
 	 */
 	public void adicionaConta (ContaCorrente novaConta) {
@@ -47,7 +47,7 @@ public class GerenciadoraContas {
 	/**
 	 * Remove conta da lista de contas do banco.
 	 * @param idConta ID da conta a ser removida 
-	 * @return true se a conta foi removida. False, caso contr·rio.
+	 * @return true se a conta foi removida. False, caso contrÔøΩrio.
 	 */
 	public boolean removeConta (int idConta) {
 		
@@ -65,9 +65,9 @@ public class GerenciadoraContas {
 	}
 
 	/**
-	 * Informa se uma determinada conta est· ativa ou n„o.
-	 * @param idConta ID da conta cujo status ser· verificado
-	 * @return true se a conta est· ativa. False, caso contr·rio. 
+	 * Informa se uma determinada conta estÔøΩ ativa ou nÔøΩo.
+	 * @param idConta ID da conta cujo status serÔøΩ verificado
+	 * @return true se a conta estÔøΩ ativa. False, caso contrÔøΩrio. 
 	 */
 	public boolean contaAtiva (int idConta) {
 		
@@ -87,27 +87,44 @@ public class GerenciadoraContas {
 	
 	/**
 	 * Transfere um determinado valor de uma conta Origem para uma conta Destino.
-	 * Caso n„o haja saldo suficiente, o valor n„o ser· transferido.
+	 * Caso nÔøΩo haja saldo suficiente, o valor nÔøΩo serÔøΩ transferido.
 	 * 
-	 * @param idContaOrigem conta que ter· o valor deduzido
+	 * @param idContaOrigem conta que terÔøΩ o valor deduzido
 	 * @param valor valor a ser transferido
-	 * @param idContaDestino conta que ter· o valor acrescido
-	 * @return true, se a transferÍncia foi realizada com sucesso.
+	 * @param idContaDestino conta que terÔøΩ o valor acrescido
+	 * @return true, se a transferÔøΩncia foi realizada com sucesso.
 	 */
-	public boolean transfereValor (int idContaOrigem, double valor, int idContaDestino) {
-		
-		boolean sucesso = false;
-		
-		ContaCorrente contaOrigem = pesquisaConta(idContaOrigem);
-		ContaCorrente contaDestino = pesquisaConta(idContaDestino);
-		
-//		if(contaOrigem.getSaldo() >= valor){
-			contaDestino.setSaldo(contaDestino.getSaldo() + valor);
-			contaOrigem.setSaldo(contaOrigem.getSaldo() - valor);
-			sucesso = true;
-//		}
-	
-		return sucesso;
+	public boolean transfereValor(int idContaOrigem, double valor, int idContaDestino)
+	        throws ContaInativaException {
+
+	    boolean sucesso = false;
+
+	    ContaCorrente contaOrigem = pesquisaConta(idContaOrigem);
+	    ContaCorrente contaDestino = pesquisaConta(idContaDestino);
+
+	    // verifica se contas existem
+	    if (contaOrigem == null || contaDestino == null) {
+	        return false;  // n√£o precisa lan√ßar exce√ß√£o
+	    }
+
+	    // verifica se est√£o ativas
+	    if (!contaOrigem.isAtiva() || !contaDestino.isAtiva()) {
+	        throw new ContaInativaException(ContaInativaException.MSG_CONTA_INATIVA);
+	    }
+
+	    // verifica saldo
+	    if (contaOrigem.getSaldo() < valor) {
+	        return false;
+	    }
+
+	    // faz a transfer√™ncia
+	    contaOrigem.setSaldo(contaOrigem.getSaldo() - valor);
+	    contaDestino.setSaldo(contaDestino.getSaldo() + valor);
+
+	    sucesso = true;
+	    return sucesso;
 	}
+
+
 	
 }
