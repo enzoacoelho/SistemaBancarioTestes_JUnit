@@ -12,7 +12,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class GerenciadoraClientesTeste_1 {
+public class GerenciadoraClientesTeste {
 	   // variáveis da classe (acessíveis para todos os testes)
     int IDCliente1 = 1;
     int IDCliente2 = 2;

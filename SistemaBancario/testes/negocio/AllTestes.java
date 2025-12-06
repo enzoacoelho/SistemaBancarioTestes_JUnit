@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({GerenciadoraClientesTeste_1.class, GerenciadoraContasTeste.class})
+@SuiteClasses({GerenciadoraClientesTeste.class, GerenciadoraContasTeste.class})
 public class AllTestes {
 
 }
