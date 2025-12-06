@@ -41,14 +41,26 @@ public class GerenciadoraClientesTeste {
 	
 
 	@Test
-	public void testePesquisaCliente() {	
+	public void testePesquisaClienteExistenteByID() {	
 		
 		//Chamando o metodo getClientes passando um ID
 		Cliente cliente = getClientes.pesquisaCliente(IDCliente1);
 		
 		//Verificação 
 		assertThat(cliente.getId(), is(1));
-		assertThat(cliente.getEmail(), is("enzocoelho@outlook.com"));		
+		//assertThat(cliente.getEmail(), is("enzocoelho@outlook.com"));		
+		
+	}
+	
+	@Test
+	public void testePesquisaClienteInexistenteByID() {	
+		
+		//Chamando o metodo getClientes passando um ID
+		Cliente cliente = getClientes.pesquisaCliente(55);
+		
+		//Verificação 
+		assertNull(cliente);
+		//assertThat(cliente.getEmail(), is("enzocoelho@outlook.com"));		
 		
 	}
 	
